@@ -10,6 +10,7 @@ namespace Forest
         private Node<T> leftChild;
         private Node<T> rightChild;
         private T value;
+        public int Size { get; }
 
         public Node(T Value, Node<T> Parent = null, Node<T> LeftChile = null, Node<T> RightChile = null)
         {
@@ -17,6 +18,15 @@ namespace Forest
             parent = Parent;
             leftChild = LeftChile;
             rightChild = RightChile;
+            Size = 1;
+            if(LeftChile != null)
+            {
+                Size += LeftChile.Size;
+            }
+            if(RightChile != null)
+            {
+                Size += RightChile.Size;
+            }
         }
 
         public Node(Node<T> node)
@@ -32,6 +42,11 @@ namespace Forest
             value = Value;
         }
 
+        public void SetParent(Node<T> node)
+        {
+            parent = node;
+        }
+
         public void SetLeftNode(T Value)
         {
             leftChild = new Node<T>(Value, this);
@@ -40,6 +55,7 @@ namespace Forest
         public void SetLeftNode(Node<T> Node)
         {
             leftChild = Node;
+            Node.SetParent(this);
         }
 
         public void SetRightNode(T Value)
@@ -50,6 +66,7 @@ namespace Forest
         public void SetRightNode(Node<T> Node)
         {
             rightChild = Node;
+            Node.SetParent(this);
         }
 
         public Node<T> GetParent()

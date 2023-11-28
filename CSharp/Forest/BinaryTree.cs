@@ -12,15 +12,20 @@ namespace Forest
         }
 
         public void SwapNode(Node<T> nodeA, Node<T> nodeB)
-        {
-
+        { 
             T tempBValue = nodeB.GetValue();
-            Node<T> tempA = nodeA;
 
-            nodeA = nodeB;
-            nodeA.SetValue(tempA.GetValue());
-            nodeB = tempA;
-            nodeB.SetValue(tempBValue);
+            nodeB.SetValue(nodeA.GetValue());
+            nodeA.SetValue(tempBValue);
+
+            if(nodeA.Equals(root))
+            {
+                root = nodeB;
+            }
+            else if(nodeB.Equals(root))
+            {
+                root = nodeA;
+            }
         }
 
         public Node<T> GetRoot()
@@ -47,6 +52,8 @@ namespace Forest
         /// <param name="n"></param>
         public virtual void Iterate(Node<T> n)
         {
+            if (n == null)
+                return;
             Iterate(n.GetLeftChild());
             Console.WriteLine(n.GetValue().ToString());
             Iterate(n.GetRightChild());
@@ -162,9 +169,15 @@ namespace Forest
             }
             else
             {
-                SwapNode(node, PreSuccessor(node));
+                Node<T> preNode = PreSuccessor(node);
+                SwapNode( node,  preNode);
                 RemoveNode(node);
             }
+        }
+
+        public void AddNode(Node<T> node)
+        {
+
         }
 
     }
